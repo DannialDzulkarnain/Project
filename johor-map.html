@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Johor Tourist Map</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+
+        .popup-img {
+            width: 200px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([1.4854, 103.7613], 8); // Centered on Johor
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        const places = [
+            {
+                name: "Sultan Ibrahim Building",
+                coords: [1.4561, 103.7631],
+                img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Sultan_Ibrahim_Building%2C_Johor_Bahru.jpg/320px-Sultan_Ibrahim_Building%2C_Johor_Bahru.jpg",
+                link: "https://example.com/sultan-ibrahim"
+            },
+            {
+                name: "Legoland Malaysia",
+                coords: [1.4264, 103.6292],
+                img: "https://www.legoland.com.my/contentassets/870d032dd9b3407b8d89d244b10a7863/llmy-homepage-banner-desktop.jpg",
+                link: "https://example.com/legoland"
+            }
+        ];
+
+        places.forEach(place => {
+            L.marker(place.coords).addTo(map)
+                .bindPopup(`
+          <strong>${place.name}</strong><br>
+          <a href="${place.link}" target="_blank">
+            <img class="popup-img" src="${place.img}" alt="${place.name}" />
+          </a>
+        `);
+        });
+    </script>
+</body>
+
+</html>
